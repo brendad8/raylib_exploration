@@ -26,13 +26,7 @@ pub fn main() void
     var radar_azimuth: f32 = 0.0;
 
     var camera: rl.Camera2D = std.mem.zeroes(rl.Camera2D);
-
-    // Camera looks at world position (0, 0)
-    camera.target = .{
-        .x = 0.0,
-        .y = 0.0,
-    };
-
+    camera.target = .{ .x = 0.0, .y = 0.0, };
     camera.rotation = 0.0;
     camera.zoom = 1.0;
 
@@ -111,6 +105,11 @@ pub fn main() void
         rl.DrawText(
             rl.TextFormat("Azimuth: %.2f", radar_azimuth * 180.0 / math.pi),
             10, 10, 20, rl.BLACK,
+        );
+        
+        rl.DrawText(
+            rl.TextFormat("Current Position: %.2f, %.2f", camera.target.x, camera.target.y),
+            10, 30, 20, rl.BLACK,
         );
     }
 }
