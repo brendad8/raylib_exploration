@@ -38,7 +38,6 @@ pub fn main() void
 
     while (!rl.WindowShouldClose()) 
     {
-
         screen_width = rl.GetScreenWidth();
         screen_height = rl.GetScreenHeight();
         
@@ -55,10 +54,10 @@ pub fn main() void
 
         const camera_speed: f32 = 5.0;
 
-        if (rl.IsKeyDown(rl.KEY_DOWN))  { camera.target.y += camera_speed; }
+        if (rl.IsKeyDown(rl.KEY_UP))    { camera.target.y -= camera_speed; }
         if (rl.IsKeyDown(rl.KEY_W))     { camera.target.y -= camera_speed; }
 
-        if (rl.IsKeyDown(rl.KEY_UP))    { camera.target.y -= camera_speed; }
+        if (rl.IsKeyDown(rl.KEY_DOWN))  { camera.target.y += camera_speed; }
         if (rl.IsKeyDown(rl.KEY_S))     { camera.target.y += camera_speed; }
 
         if (rl.IsKeyDown(rl.KEY_LEFT))  { camera.target.x -= camera_speed; }
@@ -94,7 +93,7 @@ pub fn main() void
 
         rl.ClearBackground(rl.RAYWHITE);
 
-        // Everything inside here is in WORLD coordinates
+        // NOTE(bcall): everything inside camera is relative to WORLD coordinates
         rl.BeginMode2D(camera);
 
         rl.DrawLineEx(radar_center, beam_end, 5.0, rl.GREEN);
@@ -108,7 +107,7 @@ pub fn main() void
 
         rl.EndMode2D();
 
-        // Everything after EndMode2D is screen/UI coordinates
+        // NOTE(bcall): everything outside camera is relative to screen
         rl.DrawText(
             rl.TextFormat("Azimuth: %.2f", radar_azimuth * 180.0 / math.pi),
             10, 10, 20, rl.BLACK,
